@@ -1,0 +1,161 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Extending JavaScript with macros
+
+    // build:css styles/styles.css
+    //- Check out 'src/bower_components/prism/themes/' for available themes
+    link(rel='stylesheet', type='text/css', href='bower_components/prism/themes/prism-tomorrow.css')
+    link(rel='stylesheet', type='text/css', href='bower_components/prism/plugins/line-highlight/prism-line-highlight.css')
+    link(rel='stylesheet', type='text/css', href='styles/main.css')
+    // endbuild
+
+  body
+
+    article
+
+      section
+        h1 Extending JavaScript with macros
+
+      section
+        h2 What's a macro you say
+        blockquote
+          p  A macro in computer science is a rule or pattern that specifies how a certain input sequence should be mapped to a replacement output sequence according to a defined procedure.
+
+      section
+        h2 Translation...
+        h3 Define our own syntax & extensions to JavaScript
+
+      section
+        h2 Sweet.js
+        hr
+        img(src="http://yuml.me/diagram/scruffy/class/[Macro]->[Sweet.js], [Sweet.js]->[JavaScript]")
+
+      section
+        h2 A macro
+        h3 The rules and the ouput
+        pre
+          code.language-javascript.
+            macro macroName {
+              rule {
+                // The sequence of characters to match
+              } => {
+                // The output i.e. valid JavaScript
+              }
+            }
+
+      section
+        h2 Ruby style functions
+        pre
+          code.language-javascript.
+            macro def {
+              rule {
+                $fnName:ident
+                  $body ...
+                end
+              } => {
+                function $fnName() {
+                  $body ...
+                }
+              }
+            }
+        a(href="http://bit.ly/1gs3RuD") See live demo
+
+      section
+        h2 Tripple dot ...
+        h3 Match repeated patterns
+        pre(data-line="2")
+          code.language-javascript.
+            macro w {
+              rule { ($item ...)  } => {
+                [$item (,) ...]
+              }
+            }
+            var arr = w('foo' 1 2 'bar');
+            // arr = ['foo', 1, 2, 'bar'];
+        a(href="http://bit.ly/1j7Fy9y") See live demo
+
+      section
+        h2 Match expressions
+        h3 By surrounding our pattern in $()
+        pre
+          code.language-javascript.
+            macro hash {
+              rule { ( $($item => $val) (,) ...)  } => {
+                {
+                  $($item: $val) (,) ...
+                }
+              }
+            }
+            var obj = hash(x => 1, foo => 'bar');
+        a(href="http://bit.ly/1seYKXR") See live demo
+
+      section
+        h2 Pattern classes
+        h3 You can restrict what a macro can match
+        pre
+          code.language-javascript.
+            macro type {
+              rule { $i:lit  } => { $i + 'lit' }
+              rule { $i:ident  } => { $i + 'ident' }
+              rule { $i:expr  } => { $i + 'expr' }
+            }
+            type 3; // Literal
+            type bar; // Identifier
+            type (1 + 2); // Expression
+        a(href="http://bit.ly/1gTFUB6") See live demo
+
+      section
+        h2.bullet Just the beginning...
+        hr
+        ul
+          li Multiple rules
+          li Case macros
+          li Infix rules
+          li Avoid recursion using let
+
+      section
+        h2 Infix rules
+        h3 Do lookbehinds for more complex macros
+        a(href="https://github.com/jlongster/es6-macros/blob/master/macros/fat-arrow.sjs") Fat arrow function macro
+        pre
+          code.language-javascript.
+            [1,2,3].map(x => x * x);
+
+      section
+        h2 Personal extensions
+        h3 Think of macros as servants in your code
+
+      section
+        h2 Further reading
+        hr
+        ul.pissoff
+          li
+            a(href="http://sweetjs.org/") Sweet.js
+          li
+            a(href="http://jlongster.com/Writing-Your-First-Sweet.js-Macro") Writing your first macro
+          li
+            a(href="https://github.com/jlongster/es6-macros/") ES6 features using macros
+
+      section
+        img(src="/images/zendesk_logo.png")
+        hr
+        h2 We're hiring in Melbourne
+        h3 JS, Ruby, Data, DevOps
+        h3
+          a(href='http://www.zendesk.com/company/careers') http://www.zendesk.com/company/careers
+
+    // build:js scripts/scripts.js
+    script(src='bower_components/bespoke.js/dist/bespoke.min.js')
+    script(src='bower_components/bespoke-keys/dist/bespoke-keys.min.js')
+    script(src='bower_components/bespoke-touch/dist/bespoke-touch.min.js')
+    script(src='bower_components/bespoke-bullets/dist/bespoke-bullets.min.js')
+    script(src='bower_components/bespoke-scale/dist/bespoke-scale.min.js')
+    script(src='bower_components/bespoke-hash/dist/bespoke-hash.min.js')
+    script(src='bower_components/bespoke-progress/dist/bespoke-progress.min.js')
+    script(src='bower_components/prism/prism.js')
+    script(src='bower_components/prism/plugins/file-highlight/prism-file-highlight.min.js')
+    script(src='scripts/main.js')
+    // endbuild
