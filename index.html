@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Extending JavaScript with macros</title>
+    <link rel="stylesheet" href="styles/styles.css"/>
+  </head>
+  <body>
+    <article>
+      <section>
+        <h1>Extending JavaScript with macros</h1>
+      </section>
+      <section>
+        <h2>What's a macro you say</h2>
+        <blockquote>
+          <p> A macro in computer science is a rule or pattern that specifies how a certain input sequence should be mapped to a replacement output sequence according to a defined procedure.</p>
+        </blockquote>
+      </section>
+      <section>
+        <h2>Translation...</h2>
+        <h3>Define our own syntax & extensions to JavaScript</h3>
+      </section>
+      <section>
+        <h2>Sweet.js</h2>
+        <hr><img src="http://yuml.me/diagram/scruffy/class/[Macro]-&gt;[Sweet.js], [Sweet.js]-&gt;[JavaScript]">
+      </section>
+      <section>
+        <h2>A macro</h2>
+        <h3>The rules and the ouput</h3>
+        <pre><code class="language-javascript">macro macroName {
+  rule {
+    // The sequence of characters to match
+  } => {
+    // The output i.e. valid JavaScript
+  }
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Ruby style functions</h2>
+        <pre><code class="language-javascript">macro def {
+  rule {
+    $fnName:ident
+      $body ...
+    end
+  } => {
+    function $fnName() {
+      $body ...
+    }
+  }
+}</code></pre><a href="http://bit.ly/1gs3RuD">See live demo</a>
+      </section>
+      <section>
+        <h2>Tripple dot ...</h2>
+        <h3>Match repeated patterns</h3>
+        <pre data-line="2"><code class="language-javascript">macro w {
+  rule { ($item ...)  } => {
+    [$item (,) ...]
+  }
+}
+var arr = w('foo' 1 2 'bar');
+// arr = ['foo', 1, 2, 'bar'];</code></pre><a href="http://bit.ly/1j7Fy9y">See live demo</a>
+      </section>
+      <section>
+        <h2>Match expressions</h2>
+        <h3>By surrounding our pattern in $()</h3>
+        <pre><code class="language-javascript">macro hash {
+  rule { ( $($item => $val) (,) ...)  } => {
+    {
+      $($item: $val) (,) ...
+    }
+  }
+}
+var obj = hash(x => 1, foo => 'bar');</code></pre><a href="http://bit.ly/1seYKXR">See live demo</a>
+      </section>
+      <section>
+        <h2>Pattern classes</h2>
+        <h3>You can restrict what a macro can match</h3>
+        <pre><code class="language-javascript">macro type {
+  rule { $i:lit  } => { $i + 'lit' }
+  rule { $i:ident  } => { $i + 'ident' }
+  rule { $i:expr  } => { $i + 'expr' }
+}
+type 3; // Literal
+type bar; // Identifier
+type (1 + 2); // Expression</code></pre><a href="http://bit.ly/1gTFUB6">See live demo</a>
+      </section>
+      <section>
+        <h2 class="bullet">Just the beginning...</h2>
+        <hr>
+        <ul>
+          <li>Multiple rules</li>
+          <li>Case macros</li>
+          <li>Infix rules</li>
+          <li>Avoid recursion using let</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Infix rules</h2>
+        <h3>Do lookbehinds for more complex macros</h3><a href="https://github.com/jlongster/es6-macros/blob/master/macros/fat-arrow.sjs">Fat arrow function macro</a>
+        <pre><code class="language-javascript">[1,2,3].map(x => x * x);
+</code></pre>
+      </section>
+      <section>
+        <h2>Personal extensions</h2>
+        <h3>Think of macros as servants in your code</h3>
+      </section>
+      <section>
+        <h2>Further reading</h2>
+        <hr>
+        <ul class="pissoff">
+          <li><a href="http://sweetjs.org/">Sweet.js</a></li>
+          <li><a href="http://jlongster.com/Writing-Your-First-Sweet.js-Macro">Writing your first macro</a></li>
+          <li><a href="https://github.com/jlongster/es6-macros/">ES6 features using macros</a></li>
+        </ul>
+      </section>
+      <section><img src="/images/zendesk_logo.png">
+        <hr>
+        <h2>We're hiring in Melbourne</h2>
+        <h3>JS, Ruby, Data, DevOps</h3>
+        <h3><a href="http://www.zendesk.com/company/careers">http://www.zendesk.com/company/careers</a></h3>
+      </section>
+    </article>
+    <script src="scripts/scripts.js"></script>
+  </body>
+</html>
